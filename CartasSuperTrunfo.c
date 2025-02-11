@@ -8,6 +8,7 @@
 // Siga os comentários para implementar cada parte do desafio.
 //Teste larissa
 
+//Typedef dando o nome de "Cidade" para a nossa estrutura "Cartas Super Trunfo", no qual com o Struct podemos agrupar variáveis 
 typedef struct CartasSuperTrunfo
 {
     char codigo [5]; // Código da cidade (Ex: "A01", "B02"), armazenado como uma string de até 4 caracteres + 1 para o '\0' (terminador de string).
