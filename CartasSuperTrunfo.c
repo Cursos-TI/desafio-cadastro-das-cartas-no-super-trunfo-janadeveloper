@@ -18,6 +18,12 @@ typedef struct CartasSuperTrunfo
     int pontos_turisticos; // Número de pontos turísticos na cidade.
 } Cidade;
 
+//Função para calcular "Super Poder"
+float calcular_super_poder(Cidade cidade) {
+    return cidade.populacao + cidade.area + cidade.pib + cidade.pontos_turisticos;
+}
+
+// Função para exibir os dados de uma cidade
 void exibir_dados(Cidade cidade){ //Recebe um único objeto do tipo Cidade para Exibição.
 
     //Declarando as variavéis densidade e PIB per capita.
@@ -32,6 +38,7 @@ void exibir_dados(Cidade cidade){ //Recebe um único objeto do tipo Cidade para 
         pib_per_capita = cidade.pib / cidade.populacao;
     }
 
+    printf("------------------------------\n");
     printf("Código: %s\n", cidade.codigo);
     printf("População: %d habitantes\n", cidade.populacao);
     printf("Área: %.2f km²\n", cidade.area);
@@ -87,6 +94,38 @@ void exibir_cidades(Cidade cidades[], int contador) {
         exibir_dados(cidades[i]);
     }
 }
+
+//Função para comparar duas cartas
+void comparar_cartas(Cidade c1, Cidade c2) {
+    printf("\nComparação entre %s e %s\n", c1.codigo, c2.codigo);
+
+    printf("Densidade Populacional: %s vence\n", 
+        (c1.populacao / c1.area) < (c2.populacao / c2.area) ? c1.codigo : c2.codigo);
+
+    printf("PIB per Capita: %s vence\n", 
+        (c1.pib / c1.populacao) > (c2.pib / c2.populacao) ? c1.codigo : c2.codigo);
+
+    printf("População: %s vence\n", 
+        c1.populacao > c2.populacao ? c1.codigo : c2.codigo);
+    
+    printf("Área: %s vence\n", 
+        c1.area > c2.area ? c1.codigo : c2.codigo);
+
+    printf("PIB: %s vence\n", 
+        c1.pib > c2.pib ? c1.codigo : c2.codigo);
+    
+    printf("Pontos Turísticos: %s vence\n", 
+        c1.pontos_turisticos > c2.pontos_turisticos ? c1.codigo : c2.codigo);
+
+    // Comparação do Super Poder
+    float super1 = calcular_super_poder(c1);
+    float super2 = calcular_super_poder(c2);
+
+    printf("\nSuper Poder: %s vence\n", 
+        super1 > super2 ? c1.codigo : c2.codigo);
+}
+
+
 int main() {
     // Sugestão: Defina variáveis separadas para cada atributo da cidade.
     // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
@@ -104,5 +143,18 @@ int main() {
     // Exiba os valores inseridos para cada atributo da cidade, um por linha.
 
     exibir_cidades(cidades, contador);
+
+    // Escolha de cartas para comparação
+    int idx1, idx2;
+    printf("\nDigite o índice da primeira cidade para comparação: ");
+    scanf("%d", &idx1);
+    printf("Digite o índice da segunda cidade para comparação: ");
+    scanf("%d", &idx2);
+
+    if (idx1 >= 0 && idx1 < contador && idx2 >= 0 && idx2 < contador) {
+        comparar_cartas(cidades[idx1], cidades[idx2]);
+    } else {
+        printf("Índices inválidos!\n");
+    }
     return 0;
 }
