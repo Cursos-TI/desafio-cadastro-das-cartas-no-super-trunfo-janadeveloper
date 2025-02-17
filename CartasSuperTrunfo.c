@@ -6,7 +6,7 @@
 // Tema 1 - Cadastro das Cartas
 // Este código inicial serve como base para o desenvolvimento do sistema de cadastro de cartas de cidades.
 // Siga os comentários para implementar cada parte do desafio.
-//Teste larissa
+
 
 //Typedef dando o nome de "Cidade" para a nossa estrutura "Cartas Super Trunfo", no qual com o Struct podemos agrupar variáveis 
 typedef struct CartasSuperTrunfo
@@ -20,11 +20,25 @@ typedef struct CartasSuperTrunfo
 
 void exibir_dados(Cidade cidade){ //Recebe um único objeto do tipo Cidade para Exibição.
 
+    //Declarando as variavéis densidade e PIB per capita.
+    float densidade = 0;
+    float pib_per_capita = 0;
+
+    //Calculo da densidade e pib per capita
+    if (cidade.area > 0) {
+        densidade = cidade.populacao / cidade.area;
+    }
+    if (cidade.populacao > 0) {
+        pib_per_capita = cidade.pib / cidade.populacao;
+    }
+
     printf("Código: %s\n", cidade.codigo);
     printf("População: %d habitantes\n", cidade.populacao);
     printf("Área: %.2f km²\n", cidade.area);
     printf("PIB: %.2f bilhões\n", cidade.pib);
     printf("Pontos Turísticos: %d\n", cidade.pontos_turisticos);
+    printf("Densidade Populacional: %.2f hab/km²\n", densidade);
+    printf("PIB per Capita: R$ %.2f\n", pib_per_capita);
     printf("------------------------------\n");
 }
 
