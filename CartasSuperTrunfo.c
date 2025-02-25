@@ -1,6 +1,4 @@
  #include <stdio.h>
-// #include <stdlib.h>
-#include <string.h>
 
 // Desafio Super Trunfo - Países
 // // Tema 1 - Cadastro das Cartas
@@ -12,23 +10,29 @@ int main() {
     char estado1;          // Variável para armazenar o estado da cidade (A-H)
     char codigo1[4];       // Variável para armazenar o código da carta (ex: A01)
     char nomeCidade1[50];  // Variável para armazenar o nome da cidade
-    int populacao1;        // Variável para armazenar a população da cidade
+    unsigned long int populacao1; // Mudança para unsigned long int
     float area1;           // Variável para armazenar a área da cidade em km²
     float pib1;            // Variável para armazenar o PIB da cidade em bilhões de reais
     int pontosTuristicos1; // Variável para armazenar o número de pontos turísticos
     float densidadePopulacional1; // Variável para armazenar a densidade populacional (hab/km²)
     float pibPerCapita1;   // Variável para armazenar o PIB per capita (reais)
+    float superPoder1;
 
     // Declaração de variáveis para a segunda carta
     char estado2;          // Variável para armazenar o estado da cidade (A-H)
     char codigo2[4];       // Variável para armazenar o código da carta (ex: B02)
     char nomeCidade2[50];  // Variável para armazenar o nome da cidade
-    int populacao2;        // Variável para armazenar a população da cidade
+    unsigned long int populacao2; // Mudança para unsigned long int
     float area2;           // Variável para armazenar a área da cidade em km²
     float pib2;            // Variável para armazenar o PIB da cidade em bilhões de reais
     int pontosTuristicos2; // Variável para armazenar o número de pontos turísticos
     float densidadePopulacional2; // Variável para armazenar a densidade populacional (hab/km²)
     float pibPerCapita2;   // Variável para armazenar o PIB per capita (reais)
+    float superPoder2;
+
+    // Variáveis para contar as vitórias
+    int vitoriasCarta1 = 0;
+    int vitoriasCarta2 = 0;
 
     // Entrada de dados para a primeira carta
     printf("Cadastro da Carta 1:\n");
@@ -51,6 +55,8 @@ int main() {
     densidadePopulacional1 = populacao1 / area1;   // Calcula a densidade populacional (hab/km²)
     // Aqui, multiplicamos o PIB por 1.000.000.000 (para converter de bilhões para reais), já que a entrada é dada em bilhões de reais.
     pibPerCapita1 = (pib1 * 1000000000) / populacao1; // Calcula o PIB per capita (em reais)
+    superPoder1 = populacao1 + area1 + (pib1 * 1000000000) + pontosTuristicos1 + pibPerCapita1 + (1 / densidadePopulacional1);
+
 
     // Entrada de dados para a segunda carta
     printf("\nCadastro da Carta 2:\n");
@@ -72,7 +78,7 @@ int main() {
     // Cálculos para a segunda carta
     densidadePopulacional2 = populacao2 / area2;   // Calcula a densidade populacional (hab/km²)
     pibPerCapita2 = (pib2 * 1000000000) / populacao2; // Calcula o PIB per capita (em reais)
-
+    superPoder2 = populacao2 + area2 + (pib2 * 1000000000) + pontosTuristicos2 + pibPerCapita2 + (1 / densidadePopulacional2);
 
    // Exibição dos dados cadastrados para a primeira carta
    printf("\nCarta 1:\n");
@@ -98,8 +104,65 @@ int main() {
    printf("Densidade Populacional: %.2f hab/km²\n", densidadePopulacional2); // Exibe a densidade populacional
    printf("PIB per Capita: %.2f reais\n", pibPerCapita2);  // Exibe o PIB per capita
 
+    // Comparação dos atributos e contagem das vitórias usando operador ternário
+    printf("\nComparação de Cartas:\n");
+    printf("\nlembrando que: a carta 1 imprimi = 1 (vitória) e a carta 2 imprimi = 0 (vitória)\n");
+
+    // Comparando População
+    printf("População: ");
+    vitoriasCarta1 += (populacao1 > populacao2) ? 1 : 0;
+    vitoriasCarta2 += (populacao2 > populacao1) ? 1 : 0;
+    printf("%d\n", populacao1 > populacao2 ? 1 : 0); // Carta 1 vence se População maior, senão Carta 2
+
+    // Comparando Área
+    printf("Área: ");
+    vitoriasCarta1 += (area1 > area2) ? 1 : 0;
+    vitoriasCarta2 += (area2 > area1) ? 1 : 0;
+    printf("%d\n", area1 > area2 ? 1 : 0); // Carta 1 vence se Área maior, senão Carta 2
+
+    // Comparando PIB
+    printf("PIB: ");
+    vitoriasCarta1 += (pib1 > pib2) ? 1 : 0;
+    vitoriasCarta2 += (pib2 > pib1) ? 1 : 0;
+    printf("%d\n", pib1 > pib2 ? 1 : 0); // Carta 1 vence se PIB maior, senão Carta 2
+
+    // Comparando Pontos Turísticos
+    printf("Pontos Turísticos: ");
+    vitoriasCarta1 += (pontosTuristicos1 > pontosTuristicos2) ? 1 : 0;
+    vitoriasCarta2 += (pontosTuristicos2 > pontosTuristicos1) ? 1 : 0;
+    printf("%d\n", pontosTuristicos1 > pontosTuristicos2 ? 1 : 0); // Carta 1 vence se Pontos Turísticos maior, senão Carta 2
+
+    // Comparando Densidade Populacional (menor densidade vence)
+    printf("Densidade Populacional: ");
+    vitoriasCarta1 += (densidadePopulacional1 < densidadePopulacional2) ? 1 : 0;
+    vitoriasCarta2 += (densidadePopulacional2 < densidadePopulacional1) ? 1 : 0;
+    printf("%d\n", densidadePopulacional1 < densidadePopulacional2 ? 1 : 0); // Carta 1 vence se Densidade menor
+
+    // Comparando PIB per Capita
+    printf("PIB per Capita: ");
+    vitoriasCarta1 += (pibPerCapita1 > pibPerCapita2) ? 1 : 0;
+    vitoriasCarta2 += (pibPerCapita2 > pibPerCapita1) ? 1 : 0;
+    printf("%d\n", pibPerCapita1 > pibPerCapita2 ? 1 : 0); // Carta 1 vence se PIB per Capita maior, senão Carta 2
+
+    // Comparando Super Poder
+    printf("Super Poder: ");
+    vitoriasCarta1 += (superPoder1 > superPoder2) ? 1 : 0;
+    vitoriasCarta2 += (superPoder2 > superPoder1) ? 1 : 0;
+    printf("%d\n", superPoder1 > superPoder2 ? 1 : 0); // Carta 1 vence se Super Poder maior, senão Carta 2
+
+        // Resultado Final 
+        printf("\nResultado Final:\n");
+        // Exibe o vencedor ou Empate 
+        printf("%s\n", vitoriasCarta1 > vitoriasCarta2 ? "Carta 1 é a vencedora!" : (vitoriasCarta1 < vitoriasCarta2 ? "Carta 2 é a vencedora!" : "Empate!"));
+    
    return 0;  // Fim do programa
 }
+
+
+
+
+
+
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%% CÓDIGO 2 DE TESTE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
